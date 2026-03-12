@@ -6,6 +6,7 @@ import { SelectionPage } from '@/components/selection/SelectionPage';
 import { VoucherPage } from '@/components/voucher';
 import { MOCK_INVOICES } from '@/constants/mockData';
 import { PageTransition } from '@/components/layout/PageTransition';
+import { AnimatedBackground } from '@/components/layout/AnimatedBackground';
 
 const DEFAULT_DELIVERER = () =>
   JSON.parse(localStorage.getItem('delivererProfile')) || { name: '', id: '', status: '' };
@@ -43,6 +44,8 @@ export default function App() {
 
   return (
     <>
+      <AnimatedBackground />
+
       <AnimatePresence mode="wait">
         {deliverer.status !== 'accepted' ? (
           <PageTransition key="login">

@@ -33,7 +33,7 @@ export function DelivererLogin({ deliverer, onSave }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
       <AnimatedBackground />
 
       <div id="main-content" className="relative z-10 w-full max-w-[420px]">

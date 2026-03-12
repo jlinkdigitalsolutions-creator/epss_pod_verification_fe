@@ -43,7 +43,7 @@ export function VoucherPage({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col ">
       <AnimatedBackground />
       <TopNav
         user={deliverer}

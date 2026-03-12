@@ -74,7 +74,7 @@ export function SignModal({
       <DialogContent
         className={cn(
           'max-w-2xl max-h-[90vh] overflow-y-auto p-0 gap-0 border-0 shadow-2xl',
-          'rounded-2xl bg-gradient-to-b from-card via-card to-muted/30',
+          'rounded-2xl bg-gradient-to-b from-card via-card to-muted',
           'ring-1 ring-border/80'
         )}
       >
@@ -126,7 +126,7 @@ export function SignModal({
               <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
                 <h4 className="font-semibold text-sm uppercase tracking-wider text-foreground/90">Delivered By</h4>
                 {deliveredSigned && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-900/80 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-300">
                     <CheckCircle2 className="h-3 w-3" /> Signed
                   </span>
                 )}
@@ -157,12 +157,12 @@ export function SignModal({
                     'relative rounded-2xl border-2 bg-background/80 overflow-hidden min-h-[110px] transition-all duration-300',
                     'hover:border-primary/40 hover:ring-2 hover:ring-primary/10 hover:ring-offset-2 hover:ring-offset-background',
                     activePad === 'delivered' && 'border-primary/60 ring-2 ring-primary/20 ring-offset-2 ring-offset-background',
-                    deliveredSigned && 'border-emerald-500/50 dark:border-emerald-500/40 bg-emerald-500/5',
+                    deliveredSigned && 'border-emerald-500/50 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-950/90',
                     !deliveredSigned && 'border-dashed border-border'
                   )}
                 >
                   {deliveredSigned && (
-                    <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                    <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/25 text-emerald-700 dark:bg-emerald-400 dark:text-emerald-950">
                       <CheckCircle2 className="h-3.5 w-3.5" />
                     </div>
                   )}
@@ -197,7 +197,7 @@ export function SignModal({
               <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
                 <h4 className="font-semibold text-sm uppercase tracking-wider text-foreground/90">Received By</h4>
                 {receivedSigned && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-900/80 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-300">
                     <CheckCircle2 className="h-3 w-3" /> Signed
                   </span>
                 )}
@@ -227,12 +227,12 @@ export function SignModal({
                     'relative rounded-2xl border-2 bg-background/80 overflow-hidden min-h-[110px] transition-all duration-300',
                     'hover:border-primary/40 hover:ring-2 hover:ring-primary/10 hover:ring-offset-2 hover:ring-offset-background',
                     activePad === 'received' && 'border-primary/60 ring-2 ring-primary/20 ring-offset-2 ring-offset-background',
-                    receivedSigned && 'border-emerald-500/50 dark:border-emerald-500/40 bg-emerald-500/5',
+                    receivedSigned && 'border-emerald-500/50 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-950/90',
                     !receivedSigned && 'border-dashed border-border'
                   )}
                 >
                   {receivedSigned && (
-                    <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                    <div className="absolute top-2 right-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/25 text-emerald-700 dark:bg-emerald-400 dark:text-emerald-950">
                       <CheckCircle2 className="h-3.5 w-3.5" />
                     </div>
                   )}
