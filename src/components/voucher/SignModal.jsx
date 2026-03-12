@@ -207,7 +207,6 @@ export function SignModal({
               <Label className="text-xs font-medium text-muted-foreground">Name</Label>
               <Input
                 placeholder="Receiver name"
-                readOnly
                 variant="filled"
                 className="h-11 rounded-xl"
               />
