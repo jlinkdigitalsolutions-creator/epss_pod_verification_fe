@@ -54,7 +54,7 @@ export function DelivererLogin({ deliverer, onSave }) {
               </div>
               <div>
                 <h2 className="text-lg font-semibold tracking-tight">Sign in</h2>
-                <p className="text-sm text-muted-foreground">Enter your deliverer credentials</p>
+                <p className="text-sm text-muted-foreground">Enter your credentials</p>
               </div>
             </div>
 
@@ -65,7 +65,7 @@ export function DelivererLogin({ deliverer, onSave }) {
                 </Label>
                 <Input
                   id="name"
-                  placeholder="Enter username"
+                  placeholder="Username"
                   value={form.name}
                   onChange={(e) => {
                     setForm((p) => ({ ...p, name: e.target.value }));
@@ -86,11 +86,11 @@ export function DelivererLogin({ deliverer, onSave }) {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="id" className="text-sm font-medium">
-                  Staff ID <span className="text-destructive">*</span>
+                  Password <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="id"
-                  placeholder="Enter staff ID"
+                  placeholder="Password"
                   value={form.id}
                   onChange={(e) => {
                     setForm((p) => ({ ...p, id: e.target.value }));
@@ -101,6 +101,7 @@ export function DelivererLogin({ deliverer, onSave }) {
                   autoComplete="off"
                   disabled={loading}
                   error={errors.id}
+                  type="password"
                   required
                 />
                 {errors.id && (

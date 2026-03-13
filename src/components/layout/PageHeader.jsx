@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
  */
 export function PageHeader({ title, description, className, children }) {
   return (
-    <header className={cn('mb-6 md:mb-8', className)}>
+    <header className={cn(/*'mb-6 md:mb-8',*/ className)}>
       <h1 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
         {title}
       </h1>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const TH = ({ children, className, ...props }) => (
@@ -19,8 +19,32 @@ const TD = ({ children, className, ...props }) => (
   </td>
 );
 
-export function VoucherTable({ items }) {
-  if (!items?.length) {
+export function VoucherTableEdit({ data, onUpdate }) {
+
+  // Use a local state for the table items to keep typing snappy
+  const [invoice, setInvoice] = useState(data);
+
+  const handleQtyChange = (itemId, newQty) => {
+    const numericQty = Number(newQty);
+    
+    const updatedInvoice = {
+      ...invoice,
+      items: invoice.items.map(item => 
+        item.id === itemId 
+          ? { 
+              ...item, 
+              receivedQty: numericQty,
+              totalCost: numericQty * item.unitCost 
+            } 
+          : item
+      )
+    };
+
+    setInvoice(updatedInvoice); // Update local view
+    onUpdate(updatedInvoice);    // Send to Parent so Parent's "Save" button works
+  };
+
+  if (!invoice?.items?.length) {
     return (
       <div className="rounded-xl border border-border bg-muted/20 py-12 text-center text-sm text-muted-foreground">
         No items in this voucher.
@@ -50,8 +74,16 @@ export function VoucherTable({ items }) {
               Unit
             </TH>
             <TH className="text-center min-w-[50px]">
-              <span className="block text-[10px] font-normal text-muted-foreground/80">ብዛት</span>
-              Qty
+              <span className="block text-[10px] font-normal text-muted-foreground/80"></span>
+              Invoiced
+            </TH>
+            <TH className="text-center min-w-[50px]">
+              <span className="block text-[10px] font-normal text-muted-foreground/80"></span>
+              Received
+            </TH>
+            <TH className="text-center min-w-[50px]">
+              <span className="block text-[10px] font-normal text-muted-foreground/80"></span>
+              NOT Received
             </TH>
             <TH className="text-right min-w-[80px]">
               <span className="block text-[10px] font-normal text-muted-foreground/80">የአንዱ ዋጋ</span>
@@ -76,7 +108,7 @@ export function VoucherTable({ items }) {
           </tr>
         </thead>
         <tbody>
-          {items.map((item, i) => (
+          {invoice.items.map((item, i) => (
             <tr
               key={item.id ?? i}
               className="border-b border-border transition-colors duration-150 hover:bg-muted/30 active:bg-muted/40"
@@ -85,11 +117,16 @@ export function VoucherTable({ items }) {
               <TD>{item.internalCode}</TD>
               <TD>{item.description}</TD>
               <TD className="text-center">{item.unit}</TD>
-              <TD className="text-center">
-              <span className="inline-block min-w-[3rem] px-3 py-1 rounded-md border-2 border-green-500/30 bg-green-50/20 text-green-700 font-medium">
-                {item.receivedQty}
-              </span>
-            </TD>
+              <TD className="text-center">{item.invoicedQty}</TD>
+              <TD className="p-2 border-b">
+                <input
+                  type="number"
+                  className="w-20 px-2 py-1 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={item.receivedQty}
+                  onChange={(e) => handleQtyChange(item.id, e.target.value)}
+                />
+              </TD>
+              <TD className="text-center">{item.invoicedQty - item.receivedQty}</TD>
               <TD className="text-right">{item.unitCost}</TD>
               <TD className="text-right font-semibold">{item.totalCost}</TD>
               <TD>{item.batch}</TD>
@@ -98,11 +135,11 @@ export function VoucherTable({ items }) {
             </tr>
           ))}
           <tr className="bg-muted/30 border-border font-medium">
-            <TD colSpan={6} className="text-right py-3 border-r border-border">
+            <TD colSpan={8} className="text-right py-3 border-r border-border">
               <span className="text-muted-foreground font-normal text-xs">ጠቅላላ ዋጋ / </span>Sum Total
             </TD>
             <TD colSpan={1} className="text-right py-3 ">
-              {items.reduce((acc, item) => acc + item.totalCost, 0)}
+              {invoice.items.reduce((acc, item) => acc + item.totalCost, 0)}
             </TD>
             <TD colSpan={3}></TD>
           </tr>

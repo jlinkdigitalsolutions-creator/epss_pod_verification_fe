@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { getRegionInfo } from '@/constants/regions';
 import { FileText } from 'lucide-react';
 
-export function VoucherHeader({ invoice, regionInfo }) {
+export function VoucherHeader({ invoice, regionInfo, userInfo }) {
   const info = regionInfo || getRegionInfo(invoice?.regionCode);
 
   if (!invoice) return null;
@@ -48,11 +48,11 @@ export function VoucherHeader({ invoice, regionInfo }) {
       </div>
       <div className="mt-5 text-left space-y-3 text-sm rounded-xl bg-muted/30 border border-border p-4 transition-colors duration-200 hover:bg-muted/40">
         <p className="amharic-declaration leading-relaxed">
-          እኔ <strong>{invoice.receiverName}</strong> በቀን <strong>{invoice.date}</strong> ከ{' '}
-          <strong>{invoice.sender}</strong> የተላከውን ከታች የተዘረዘረውን ዕቃ በትክክል ቆጥሬ መረከቤን አረጋግጣለሁ::
+          እኔ <strong>{userInfo?.formattedName || "________________"}</strong> በቀን <strong>{ new Date().toISOString().split('T')[0] }</strong> ከ{' '}
+          <strong>{invoice.sender}</strong> ለ <strong>{invoice.receivingFacility}</strong> የተላከውን ከታች የተዘረዘረውን ዕቃ በትክክል ቆጥሬ መረከቤን አረጋግጣለሁ::
         </p>
-        <p className="text-muted-foreground leading-relaxed">
-          I, <strong>{invoice.receiverName}</strong>, on <strong>{invoice.date}</strong>, hereby certify that I have
+        <p className=" leading-relaxed">
+          I, <strong>{userInfo?.formattedName || "________________"}</strong>, on <strong>{ new Date().toISOString().split('T')[0] }</strong>, hereby certify that I have
           counted correctly and received items enumerated below for <strong>{invoice.receivingFacility}</strong> from{' '}
           <strong>{invoice.sender}</strong> (Invoice No: {invoice.invoiceNo}).
         </p>

@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { User, LogOut, ChevronDown } from 'lucide-react';
 import { Logo } from './Logo';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { cn } from '@/lib/utils';
 
-export function TopNav({ user, onLogout, title }) {
+export function TopNav({ user, title }) {
+  const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
+
+  const clearLocalStorage = () => {
+    localStorage.setItem('userinfo', null);
+  }
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-card/98 backdrop-blur-md shadow-sm">
@@ -59,14 +66,15 @@ export function TopNav({ user, onLogout, title }) {
               >
                 <div className="px-3 py-2.5 border-b border-border">
                   <p className="text-sm font-medium truncate">{user?.name || 'Deliverer'}</p>
-                  <p className="text-xs text-muted-foreground truncate">ID: {user?.id || '—'}</p>
+                  {/* <p className="text-xs text-muted-foreground truncate">ID: {user?.id || '—'}</p> */}
                 </div>
                 <button
                   type="button"
                   role="menuitem"
                   onClick={() => {
                     setProfileOpen(false);
-                    onLogout?.();
+                    navigate('/');
+                    clearLocalStorage();
                   }}
                   className="flex w-full items-center gap-2 px-3 py-2.5 text-sm text-foreground hover:bg-muted rounded-lg transition-colors duration-150"
                 >

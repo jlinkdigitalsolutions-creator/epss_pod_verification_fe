@@ -19,8 +19,7 @@ export function SelectionPage({
   selectedFacility,
   onSelectFacility,
   onSelectInvoice,
-  user,
-  onLogout,
+  user
 }) {
   const [loadingInvoice, setLoadingInvoice] = useState(false);
 
@@ -38,7 +37,7 @@ export function SelectionPage({
   return (
     <div className="min-h-screen flex flex-col">
       <AnimatedBackground />
-      <TopNav user={user} onLogout={onLogout} title="Select invoice" />
+      <TopNav user={user} title="Select invoice" />
 
       <main id="main-content" className="flex-1 p-4 md:p-6 lg:p-8" role="main">
         <div className="max-w-2xl mx-auto space-y-6">

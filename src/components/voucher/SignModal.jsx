@@ -21,6 +21,7 @@ export function SignModal({
   invoice,
   deliverer,
   onFinalize,
+  userInfo
 }) {
   const deliveredSigRef = useRef(null);
   const receivedSigRef = useRef(null);
@@ -206,9 +207,10 @@ export function SignModal({
             <div className="space-y-3">
               <Label className="text-xs font-medium text-muted-foreground">Name</Label>
               <Input
-                placeholder="Receiver name"
+                value={userInfo?.formattedName  ?? ''}
+                readOnly
                 variant="filled"
-                className="h-11 rounded-xl"
+                className="h-11 font-medium rounded-xl"
               />
             </div>
             <div className="space-y-2 mt-4">

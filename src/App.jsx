@@ -4,14 +4,18 @@ import { saveSignedVoucher, initDB } from '@/db';
 import { DelivererLogin } from '@/components/auth/DelivererLogin';
 import { SelectionPage } from '@/components/selection/SelectionPage';
 import { VoucherPage } from '@/components/voucher';
+import { InvoicePage } from '@/components/voucher/InvoicePage';
 import { MOCK_INVOICES } from '@/constants/mockData';
-import { PageTransition } from '@/components/layout/PageTransition';
 import { AnimatedBackground } from '@/components/layout/AnimatedBackground';
 
-const DEFAULT_DELIVERER = () =>
-  JSON.parse(localStorage.getItem('delivererProfile')) || { name: '', id: '', status: '' };
+
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+
+const DEFAULT_DELIVERER = { name: '', id: '', status: '' };
 
 export default function App() {
+  const navigate = useNavigate();
+
   const [deliverer, setDeliverer] = useState(DEFAULT_DELIVERER);
   const [invoice, setInvoice] = useState(null);
   const [selectedFacility, setSelectedFacility] = useState('');
@@ -44,48 +48,54 @@ export default function App() {
 
   return (
     <>
-      <AnimatedBackground />
 
+      <AnimatedBackground />
       <AnimatePresence mode="wait">
-        {deliverer.status !== 'accepted' ? (
-          <PageTransition key="login">
+        <Routes>
+          <Route path="/" element={
             <DelivererLogin
               deliverer={deliverer}
               onSave={(data) => {
-                setDeliverer(data);
-                localStorage.setItem('delivererProfile', JSON.stringify(data));
+                if(data.name == 'Staff')
+                  setDeliverer(data);
+                  localStorage.setItem('delivererProfile', JSON.stringify(data));
+                  navigate('/selection');
               }}
-            />
-          </PageTransition>
-        ) : !invoice ? (
-          <PageTransition key="selection">
+            />} 
+          />
+
+          <Route path="/selection" element={
             <SelectionPage
               facilities={facilities}
               availableInvoices={availableInvoices}
               selectedFacility={selectedFacility}
               onSelectFacility={setSelectedFacility}
-              onSelectInvoice={setInvoice}
-              user={deliverer}
-              onLogout={() => {
-                setDeliverer({ name: '', id: '', status: '' });
-                localStorage.removeItem('delivererProfile');
+              onSelectInvoice={(data) => { 
+                setInvoice(data);
+                localStorage.setItem('selectedInvoice', JSON.stringify(data));
+                navigate('/invoice');
               }}
-            />
-          </PageTransition>
-        ) : (
-          <PageTransition key="voucher">
+              user={deliverer}
+            />} 
+          />
+
+          <Route path="/invoice" element={
+            <InvoicePage
+              deliverer={deliverer}
+              onBack={() => setInvoice(null)}
+              saveSignedVoucher={saveSignedVoucher}
+            />} 
+          />
+
+          <Route path="/callback" element={
             <VoucherPage
               invoice={invoice}
               deliverer={deliverer}
               onBack={() => setInvoice(null)}
               saveSignedVoucher={saveSignedVoucher}
-              onLogout={() => {
-                setDeliverer({ name: '', id: '', status: '' });
-                localStorage.removeItem('delivererProfile');
-              }}
-            />
-          </PageTransition>
-        )}
+            />} 
+          />
+        </Routes>
       </AnimatePresence>
     </>
   );
